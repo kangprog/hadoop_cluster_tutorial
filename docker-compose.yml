@@ -1,0 +1,43 @@
+#
+# Date: 2022.03.02
+# Author: Hyunwoo Kang
+#
+
+version: "3.9"
+services:
+  nn:
+    container_name: 'nn'
+    image: hadoop_name_node:latest
+    ports:
+      - "50070:50070"
+    networks:
+      - hadoop_network
+    depends_on:
+      - dh1
+      - dh2
+      - dh3
+    restart: always
+
+  dh1:
+    container_name: 'dh1'
+    image: hadoop_data_node:latest
+    networks:
+      - hadoop_network
+    restart: always
+
+  dh2:
+    container_name: 'dh2'
+    image: hadoop_data_node:latest
+    networks:
+      - hadoop_network
+    restart: always
+
+  dh3:
+    container_name: 'dh3'
+    image: hadoop_data_node:latest
+    networks:
+      - hadoop_network
+    restart: always
+
+networks:
+  hadoop_network:

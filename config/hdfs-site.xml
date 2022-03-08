@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- hdfs-site.xml -->
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>2</value>
+        <final>true</final>
+    </property>
+
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>/hadoop_home/namenode_dir</value>
+        <final>true</final>
+    </property>
+
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>/hadoop_home/datanode_dir</value>
+        <final>true</final>
+    </property>
+</configuration>
