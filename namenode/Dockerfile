@@ -9,7 +9,6 @@ ADD hdfs-site.xml /etc/hadoop/
 
 # FsImage, EditLog 파일 경로를 volume으로 연결
 RUN mkdir /opt/hadoop/dfs/name
-VOLUME /opt/hadoop/dfs/name
 
 # 실행 스크립트 복제
 ADD start.sh /start.sh
