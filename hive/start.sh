@@ -1,4 +1,7 @@
 #!/bin/bash
 
-# Hive 기동
-$HIVE_HOME/bin/hive
+# schematool init
+$HIVE_HOME/bin/schematool -dbType derby -initSchema
+
+# inf container
+tail -f /dev/null 2>&1

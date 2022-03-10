@@ -2,7 +2,7 @@
 centOS 7버전을 베이스로 HDFS Cluster 구축
 
 ---
-## 실행 방법
+## HDFS 구축 실행 방법
 1. Base Image 빌드
 ```commandline
 # cd ./base
@@ -33,6 +33,51 @@ http://127.0.0.0:50070
 
 ---
 
+## HIVE 구축 실행 방법
+0. HDFS를 먼저 구축 한 후, 진행 해야한다.
+1. base-hive Image 빌드
+```commandline
+# cd ./base-hive
+# docker build -t hive_base:2.0.0 .
+```
+
+2. Hive Node Image 빌드
+```commandline
+# cd ./hive
+# docker build -t hadoop_hivenode:2.0.0 .
+```
+
+3. Hive Node 실행
+```commandline
+# docker-compose -f docker-compose.yml up -d
+```
+
+4. Hive 동작 확인
+```commandline
+# docker exec -ti hivenode bash
+# hive
+hive>
+```
+
+5. Hive 동작 테스트
+```commandline
+// hivenode container
+// /tmp/init-table.ddl 내용 복사 후 hive에서 table 생성
+
+# cat /tmp/init-table.ddl
+hive> <init-table.ddl 내용>
+```
+```commandline
+// data overwrite
+// /tmp/dept.csv, /tmp/emp.csv, /tmp/salgrade.csv 
+
+hive> load data local inpath '/tmp/dept.csv' overwrite into table dept;
+hive> load data local inpath '/tmp/emp.csv' overwrite into table emp;
+hive> load data local inpath '/tmp/salgrade.csv' overwrite into table salgrade;
+
+hive> select e.deptno, e.dname, e.ename, e.sal from emp e, dept d where e.deptno=d.deptno;
+```
+---
 ## 참고 사이트
 
 [Docker로 하둡 구성하기](https://taaewoo.tistory.com/entry/Docker-Docker%EB%A1%9C-Hadoop-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0-2-Hadoop-%EC%84%A4%EC%B9%98-%EB%B0%8F-%EC%84%B8%ED%8C%85?category=862614)
@@ -40,3 +85,7 @@ http://127.0.0.0:50070
 [Docker로 하둡 테스트환경 구성하기](https://blog.geunho.dev/posts/hadoop-docker-test-env-hdfs/)
 
 [OpenJDK from Centos Install](https://stackoverflow.com/questions/40636338/how-to-define-openjdk-8-in-centos-based-dockerfile)
+
+[Hive 구축](https://truman.tistory.com/209)
+
+[Hive 구축 및 테스트](https://lsjsj92.tistory.com/438)

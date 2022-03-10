@@ -8,6 +8,10 @@ FROM hive_base:2.0.0
 ADD hive-env.sh $HIVE_HOME/conf/
 ADD hive-site.xml $HIVE_HOME/conf/
 
+# mock data 복사
+ADD init-table.ddl /tmp/
+ADD mock_data /tmp/
+
 # hive용 디렉토리를 volume으로 연결
 RUN mkdir /opt/hive/warehouse
 

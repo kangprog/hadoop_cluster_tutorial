@@ -45,9 +45,10 @@ services:
     image: hadoop_hivenode:2.0.0
     container_name: hivenode
     hostname: hivenode
-    command: tail -f /dev/null
     volumes:
       - hivenode:/user/hive/warehouse
+    networks:
+      - bridge전
 
 volumes:
   namenode:
