@@ -41,11 +41,20 @@ services:
     volumes:
       - datanode03:/opt/hadoop/dfs/data
 
+  hivenode:
+    image: hadoop_hivenode:2.0.0
+    container_name: hivenode
+    hostname: hivenode
+    command: tail -f /dev/null
+    volumes:
+      - hivenode:/user/hive/warehouse
+
 volumes:
   namenode:
   datanode01:
   datanode02:
   datanode03:
+  hivenode:
 
 networks:
   bridge:
