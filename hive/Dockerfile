@@ -4,6 +4,16 @@
 
 FROM hive_base:2.0.0
 
+# MYSQL 연동을 위한 JDBC 설치
+ENV CONNECTOR_URL=http://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-5.1.46.tar.gz
+
+RUN curl -fSL "$CONNECTOR_URL" -o /tmp/connector.tar.gz \
+    && tar -xvf /tmp/connector.tar.gz -C /opt/ \
+    && rm /tmp/connector.tar.gz
+
+RUN cp /opt/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar $HIVE_HOME/lib/ \
+    && cp /opt/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46.jar $HIVE_HOME/lib/
+
 # 설정파일 복사
 ADD hive-env.sh $HIVE_HOME/conf/
 ADD hive-site.xml $HIVE_HOME/conf/

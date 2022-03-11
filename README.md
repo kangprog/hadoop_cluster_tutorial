@@ -23,7 +23,10 @@ centOS 7버전을 베이스로 HDFS Cluster 구축
 
 4. docker-compose 실행
 ```commandline
-# docker-compose -f docker-compose.yml up -d
+# docker-compose -f docker-compose.yml up -d namenode
+# docker-compose -f docker-compose.yml up -d datanode01
+# docker-compose -f docker-compose.yml up -d datanode02
+# docker-compose -f docker-compose.yml up -d datanode03
 ```
 
 5. Name Node 동작 확인
@@ -47,19 +50,36 @@ http://127.0.0.0:50070
 # docker build -t hadoop_hivenode:2.0.0 .
 ```
 
-3. Hive Node 실행
+3. Hive-metastore 실행
 ```commandline
-# docker-compose -f docker-compose.yml up -d
+# docker-compose -f docker-compose.yml up -d hive-metastore
 ```
 
-4. Hive 동작 확인
+4. Hive-metastore(mysql) 셋팅
+```commandline
+# docker exec -ti hive-metastore mysql -uroot -p
+password: mysql
+
+mysql> create database metastore default character set utf8;
+mysql> create user 'hive'@'%' identified by '123456';
+mysql> grant all privileges on metastore.* to 'hive'@'%';
+mysql> flush privileges;
+mysql> exit;
+```
+
+5. Hive Node 실행
+```commandline
+# docker-compose -f docker-compose.yml up -d hivenode
+```
+
+6. Hive 동작 확인
 ```commandline
 # docker exec -ti hivenode bash
 # hive
 hive>
 ```
 
-5. Hive 동작 테스트
+7. Hive 동작 테스트
 ```commandline
 // hivenode container
 // /tmp/init-table.ddl 내용 복사 후 hive에서 table 생성
@@ -75,7 +95,7 @@ hive> load data local inpath '/tmp/dept.csv' overwrite into table dept;
 hive> load data local inpath '/tmp/emp.csv' overwrite into table emp;
 hive> load data local inpath '/tmp/salgrade.csv' overwrite into table salgrade;
 
-hive> select e.deptno, e.dname, e.ename, e.sal from emp e, dept d where e.deptno=d.deptno;
+hive> select d.deptno, d.dname, e.ename, e.sal from emp e, dept d where e.deptno=d.deptno;
 ```
 ---
 ## 참고 사이트
@@ -89,3 +109,5 @@ hive> select e.deptno, e.dname, e.ename, e.sal from emp e, dept d where e.deptno
 [Hive 구축](https://truman.tistory.com/209)
 
 [Hive 구축 및 테스트](https://lsjsj92.tistory.com/438)
+
+[Hive-MYSQL 구축](https://earthconquest.tistory.com/233)

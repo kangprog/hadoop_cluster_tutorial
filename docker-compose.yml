@@ -50,6 +50,14 @@ services:
     networks:
       - bridge
 
+  hive-metastore:
+    image: mysql:5.7
+    container_name: hive-metastore
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+    networks:
+      - bridge
+
 volumes:
   namenode:
   datanode01:
