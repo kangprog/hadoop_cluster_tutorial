@@ -18,6 +18,8 @@ then
   hadoop namenode -format
   $HADOOP_HOME/sbin/hadoop-daemon.sh start namenode
   $HADOOP_HOME/sbin/hadoop-daemon.sh start zkfc
+
+  sleep 5
   $HADOOP_HOME/sbin/start-yarn.sh
 fi
 
@@ -32,6 +34,9 @@ then
   hdfs namenode -bootstrapStandby
   $HADOOP_HOME/sbin/hadoop-daemon.sh start namenode
   $HADOOP_HOME/sbin/hadoop-daemon.sh start zkfc
+
+  sleep 10
+  $HADOOP_HOME/sbin/yarn-daemon.sh start resourcemanager
 fi
 
 if [ "$node" == "zkdatanode" ]

@@ -98,7 +98,9 @@ ADD ./config/mapred-site.xml $HADOOP_CONF_DIR/
 ADD ./config/hadoop-env.sh $HADOOP_CONF_DIR/
 ADD ./config/slaves $HADOOP_CONF_DIR/
 
-EXPOSE 8020 8485 8089 2181 2888 3888
+ADD ./config/yarn-site.xml $HADOOP_CONF_DIR/
+
+EXPOSE 8020 8485 8089 2181 2888 3888 8088
 
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod a+x /entrypoint.sh
