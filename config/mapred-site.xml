@@ -1,0 +1,10 @@
+<configuration>
+    <property>
+        <name>mapreduce.job.ubertask.enable</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+    </property>
+</configuration>

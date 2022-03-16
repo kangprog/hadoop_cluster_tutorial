@@ -1,0 +1,26 @@
+<configuration>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
+        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.local-dirs</name>
+        <value>/opt/hadoop/yarn/nm-local-dir</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.fs.state-store.uri</name>
+        <value>/opt/hadoop/yarn/system/rmstore</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>nn01</value>
+    </property>
+    <property>
+        <name>yarn.web-proxy.address</name>
+        <value>0.0.0.0:8089</value>
+    </property>
+</configuration>

@@ -1,69 +1,49 @@
 version: "3.4"
 
-# 이미지와 네트워크 정보에 대한 base service를 지정
-x-datanode_base: &datanode_base
-  image: hadoop_datanode:2.9.2
-  networks:
-    - bridge
-
 services:
-  namenode:
-    image: hadoop_namenode:2.9.2
-    container_name: namenode
-    hostname: namenode
+  nn01:
+    image: hadoop_base:latest
+    container_name: nn01
+    hostname: nn01
+    entrypoint: /entrypoint.sh namenode
     ports:
       - 50070:50070
-      - 9000:9000
-    volumes:
-      - namenode:/opt/hadoop/dfs/name
-      - /tmp:/tmp
     networks:
       - bridge
 
-  datanode01:
-    <<: *datanode_base
-    container_name: datanode01
-    hostname: datanode01
-    volumes:
-      - datanode01:/opt/hadoop/dfs/data
-
-  datanode02:
-    <<: *datanode_base
-    container_name: datanode02
-    hostname: datanode02
-    volumes:
-      - datanode02:/opt/hadoop/dfs/data
-
-  datanode03:
-    <<: *datanode_base
-    container_name: datanode03
-    hostname: datanode03
-    volumes:
-      - datanode03:/opt/hadoop/dfs/data
-
-  hivenode:
-    image: hadoop_hivenode:2.0.0
-    container_name: hivenode
-    hostname: hivenode
-    volumes:
-      - hivenode:/user/hive/warehouse
+  nn02:
+    image: hadoop_base:latest
+    container_name: nn02
+    hostname: nn02
+    entrypoint: /entrypoint.sh secondarynamenode
+    ports:
+      - 50080:50070
     networks:
       - bridge
 
-  hive-metastore:
-    image: mysql:5.7
-    container_name: hive-metastore
-    environment:
-      - MYSQL_ROOT_PASSWORD=mysql
+  dn01:
+    image: hadoop_base:latest
+    container_name: dn01
+    hostname: dn01
+    entrypoint: /entrypoint.sh zkdatanode
     networks:
       - bridge
 
-volumes:
-  namenode:
-  datanode01:
-  datanode02:
-  datanode03:
-  hivenode:
+  dn02:
+    image: hadoop_base:latest
+    container_name: dn02
+    hostname: dn02
+    entrypoint: /entrypoint.sh datanode
+    networks:
+      - bridge
+
+  dn03:
+    image: hadoop_base:latest
+    container_name: dn03
+    hostname: dn03
+    entrypoint: /entrypoint.sh datanode
+    networks:
+      - bridge
 
 networks:
   bridge:
