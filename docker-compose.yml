@@ -47,5 +47,31 @@ services:
     networks:
       - bridge
 
+  hs01:
+    image: hive_base:latest
+    container_name: hs01
+    hostname: hs01
+    command: /entrypoint.sh hs2
+    ports:
+      - 10000:10000
+    networks:
+      - bridge
+
+  beeline:
+    image: hive_base:latest
+    container_name: beeline
+    hostname: beeline
+    command: /entrypoint.sh beeline
+    networks:
+      - bridge
+
+  metastore:
+    image: mysql:5.7
+    container_name: metastore
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+    networks:
+      - bridge
+
 networks:
   bridge:
