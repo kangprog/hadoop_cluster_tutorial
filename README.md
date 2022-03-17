@@ -33,10 +33,13 @@ mysql> flush privileges;
 mysql> exit;
 ```
 
-- hiveserver Up
+- hiveserver Up & Down
 ```python
 # python tool.py hive up
 # python tool.py hive down
+# docker exec -ti hs01 bash
+# passwd
+123456
 ```
 
 - beeline test client Up & Down
