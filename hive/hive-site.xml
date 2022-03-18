@@ -25,4 +25,8 @@
      <name>hive.server2.enable.doAs</name>
      <value>false</value>
    </property>
+    <property>
+      <name>tez.lib.uris</name>
+      <value>/app/tez</value>
+    </property>
 </configuration>

@@ -31,9 +31,30 @@ RUN curl -fSL "$CONNECTOR_URL" -o /tmp/connector.tar.gz \
 RUN cp /opt/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar $HIVE_HOME/lib/ \
     && cp /opt/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46.jar $HIVE_HOME/lib/
 
+#
+# TEZ Engine Download
+#
+ENV TEZ_VERSION=0.9.2
+ENV TEZ_URL=http://downloads.apache.org/tez/$TEZ_VERSION/apache-tez-$TEZ_VERSION-bin.tar.gz
+
+RUN curl -fSL "$TEZ_URL" -o /tmp/tez.tar.gz \
+    && tar -xvf /tmp/tez.tar.gz -C /opt/ \
+    && rm /tmp/tez.tar.gz
+
+RUN ln -s /opt/apache-tez-$TEZ_VERSION-bin /opt/tez
+
+
+#
+# TEZ 환경변수 추가
+#
+ENV TEZ_HOME /opt/tez
+ENV TEZ_CONF_DIR $TEZ_HOME/conf
+ENV TEZ_JARS=$TEZ_HOME/*:$TEZ_HOME/lib/*
+ENV HADOOP_CLASSPATH $CLASSPATH:$TEZ_CONF_DIR:$TEz_JARS/*:$TEZ_JARS/lib/*
 
 ADD hive-env.sh $HIVE_HOME/conf/
 ADD hive-site.xml $HIVE_HOME/conf/
+ADD tez-site.xml $TEZ_HOME/conf
 
 EXPOSE 10000 10002
 

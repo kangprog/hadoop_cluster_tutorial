@@ -6,6 +6,8 @@ if [ "$node" == "hs2" ]
 then
   # schematool init
   $HIVE_HOME/bin/schematool -dbType mysql -initSchema
+  hdfs dfs -mkdir -p /app/tez
+  hdfs dfs -put /opt/tez/share/tez.tar.gz /app/tez
   hive --service hiveserver2 --hiveconf hive.server2.thrift.port=10000
 fi
 
