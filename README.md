@@ -52,7 +52,7 @@ mysql> exit;
 
 # docker exec -ti beeline bash
 # beeline
-beeline>!connect jdbc:hive2//hs01:10000 root 123456!connect jdbc:hive2//hs01:10000 root 123456
+beeline>!connect jdbc:hive2://hs01:10000 root 123456
 
 0: jdbc:hive2://hs01:10000> set hive.execution.engine=tez;
 0: jdbc:hive2://hs01:10000> 
@@ -112,7 +112,8 @@ hive> insert into table test.tab1
   > set tez.am.resource.memory.mb=3072;
   ```
 - 위 에러 해결 후, session timeout 에러 발생
-  - 해결방법 찾는중...
+  - 해결방법: https://blog.csdn.net/liuxiao723846/article/details/70674803
+  - $TEZ_HOME/lib/commons-collections4-4.1.jar을 $HADOOP_HOME/lib으로 복사해주자
 ---
 
 ## 참고
