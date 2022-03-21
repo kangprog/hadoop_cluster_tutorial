@@ -99,10 +99,14 @@ ex.
 hive> set tez.am.resource.memory.mb=3072;
 ```
 
-- beeline을 통한 접속 방법
+- beeline을 통한 접속 방법, 확인 방법
 ```text
 > docker exec -ti beeline bash
-> beeline -u  "jdbc:hive2://hs01:10000?hive.execution.engine=tez"
+> beeline -u  "jdbc:hive2://hs01:10000?hive.execution.engine=tez;tez.am.resource.memory.mb=3072"
 or
-> beeline -u  "jdbc:hive2://hs02:10001?hive.execution.engine=tez"
+> beeline -u  "jdbc:hive2://hs02:10001?hive.execution.engine=tez;tez.am.resource.memory.mb=3072"
+
+0: jdbc:hive2://hs01:10000> use test;
+0: jdbc:hive2://hs01:10000> select count(*) from tab1;
+
 ```
