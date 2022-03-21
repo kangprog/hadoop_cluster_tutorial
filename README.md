@@ -92,7 +92,7 @@ hive> show tables;
 hive> insert into table test.tab1
     > select 1 as col1, 'test' as col2;
 ```
-ps. 만약 return code 1 error 발생 시, 메모리 자원할당 부족 에러임.
+ps. 만약 ` Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.tez.TezTask` 발생 시, 메모리 자원할당 부족 에러임.
 **필요 메모리 량에 맞게 설정**
 ```
 ex.
