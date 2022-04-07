@@ -110,3 +110,20 @@ or
 0: jdbc:hive2://hs01:10000> select count(*) from tab1;
 
 ```
+
+- zookeeper를 통한 접속 방법
+```text
+> beeline -u "jdbc:hive2://nn01:2181,nn02:2181,dn01:2181/;serviceDiscoveryMode=zookeeper;zookeeperNamespace=hiveserver2
+
+or
+
+> beeline
+beeline> !connect "jdbc:hive2://nn01:2181,nn02:2181,dn01:2181/;serviceDiscoveryMode=zookeeper;zookeeperNamespace=hiveserver2"
+Enter username ~~~ : hive
+Enter password ~~~ : 123456
+0: jdbc:hive2://nn01:2181,nn02:2181,dn01:2181>
+
+위 방법들 중 하나로 접속 후, 설정 필요
+0: jdbc:hive2://nn01:2181,nn02:2181,dn01:2181> set hive.execution.engine=tez;
+0: jdbc:hive2://nn01:2181,nn02:2181,dn01:2181> set tez.am.resource.memory.mb=3072;
+```
