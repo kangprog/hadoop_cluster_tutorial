@@ -43,6 +43,14 @@
       <name>hive.server2.zookeeper.namespace</name>
       <value>hiveserver2</value>
     </property>
+    <property>
+      <name>hive.execution.engine</name>
+      <value>tez</value>
+    </property>
+    <property>
+         <name>hive.tez.container.size</name>
+         <value>-1</value>
+    </property>
     <!--
     <property>
       <name>hive.zookeeper.session.timeout</name>
