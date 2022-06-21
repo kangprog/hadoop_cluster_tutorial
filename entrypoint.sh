@@ -19,7 +19,7 @@ then
   $HADOOP_HOME/sbin/hadoop-daemon.sh start namenode
   $HADOOP_HOME/sbin/hadoop-daemon.sh start zkfc
 
-  sleep 5
+  sleep 10
   $HADOOP_HOME/sbin/start-yarn.sh
 fi
 
@@ -37,6 +37,7 @@ then
 
   sleep 10
   $HADOOP_HOME/sbin/yarn-daemon.sh start resourcemanager
+  $HADOOP_HOME/sbin/yarn-daemon.sh start nodemanager
 fi
 
 if [ "$node" == "zkdatanode" ]
@@ -48,12 +49,14 @@ then
 
   sleep 10
   $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
+  $HADOOP_HOME/sbin/yarn-daemon.sh start nodemanager
 fi
 
 if [ "$node" == "datanode" ]
 then
   sleep 15
   $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
+  $HADOOP_HOME/sbin/yarn-daemon.sh start nodemanager
 fi
 
 tail -f /dev/null 2>&1

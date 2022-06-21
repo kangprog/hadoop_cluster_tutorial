@@ -35,10 +35,10 @@ ADD ./config/sshd_config /etc/ssh/
 #
 # Hadoop Install
 #
-ENV HADOOP_VERSION=2.9.2
+ENV HADOOP_VERSION=3.3.3
 ENV HADOOP_URL=http://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
-# Hadoop 2.9.2 버전을 내려받고 /opt/hadoop에 압축 해제
+# Hadoop 3.3.3 버전을 내려받고 /opt/hadoop에 압축 해제
 RUN curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
     && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
     && rm /tmp/hadoop.tar.gz
@@ -52,16 +52,16 @@ RUN ln -s /opt/hadoop-$HADOOP_VERSION /opt/hadoop \
 #
 # HA Zookeeper Download
 #
-ENV ZOOKEEPER_VERSION=3.4.9
-ENV ZOOKEEPER_URL=http://archive.apache.org/dist/zookeeper/zookeeper-$ZOOKEEPER_VERSION/zookeeper-$ZOOKEEPER_VERSION.tar.gz
+ENV ZOOKEEPER_VERSION=3.8.0
+ENV ZOOKEEPER_URL=http://archive.apache.org/dist/zookeeper/zookeeper-$ZOOKEEPER_VERSION/apache-zookeeper-$ZOOKEEPER_VERSION-bin.tar.gz
 
-# Zookeeper 3.4.9 버전을 내려받고 /opt/zookeeper에 압축 해제
+# Zookeeper 3.8.0 버전을 내려받고 /opt/zookeeper에 압축 해제
 RUN curl -fSL "$ZOOKEEPER_URL" -o /tmp/zookeeper.tar.gz \
     && tar -xvf /tmp/zookeeper.tar.gz -C /opt/ \
     && rm /tmp/zookeeper.tar.gz
 
 # 데이터 디렉토리 생성 및 설정 폴더의 심볼릭 링크 생성
-RUN ln -s /opt/zookeeper-$ZOOKEEPER_VERSION /opt/zookeeper
+RUN ln -s /opt/apache-zookeeper-$ZOOKEEPER_VERSION-bin /opt/zookeeper
 
 ADD ./config/zoo.cfg /opt/zookeeper/conf/
 

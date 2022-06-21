@@ -120,3 +120,26 @@ Enter password ~~~ : 123456
 0: jdbc:hive2://nn01:2181,nn02:2181,dn01:2181> set hive.execution.engine=tez;
 0: jdbc:hive2://nn01:2181,nn02:2181,dn01:2181> set tez.am.resource.memory.mb=3072;
 ```
+
+
+
+
+
+###zookeeper start error
+
+`Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain`
+
+참고: https://stackoverflow.com/questions/28484398/starting-zookeeper-cluster-error-could-not-find-or-load-main-class-org-apache
+
+###start-yarn.sh error
+```text
+[root@nn01 /]# $HADOOP_HOME/sbin/start-yarn.sh
+WARNING: HADOOP_PREFIX has been replaced by HADOOP_HOME. Using value of HADOOP_PREFIX.
+Starting resourcemanagers on [ nn01 nn02]
+ERROR: Attempting to operate on yarn resourcemanager as root
+ERROR: but there is no YARN_RESOURCEMANAGER_USER defined. Aborting operation.
+Starting nodemanagers
+ERROR: Attempting to operate on yarn nodemanager as root
+ERROR: but there is no YARN_NODEMANAGER_USER defined. Aborting operation.
+```
+해결방법: hadoop-env.sh에 YARN_RESOURCEMANAGER_USER='root', YARN_NODEMANAGER_USER='root' 값 넣어주기
