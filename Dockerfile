@@ -35,7 +35,7 @@ ADD ./config/sshd_config /etc/ssh/
 #
 # Hadoop Install
 #
-ENV HADOOP_VERSION=3.3.3
+ENV HADOOP_VERSION=3.1.4
 ENV HADOOP_URL=http://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
 # Hadoop 3.3.3 버전을 내려받고 /opt/hadoop에 압축 해제
@@ -65,6 +65,16 @@ RUN ln -s /opt/apache-zookeeper-$ZOOKEEPER_VERSION-bin /opt/zookeeper
 
 ADD ./config/zoo.cfg /opt/zookeeper/conf/
 
+# install pig
+ENV PIG_VERSION=0.17.0
+ENV PIG_URL=http://mirror.navercorp.com/apache/pig/pig-$PIG_VERSION/pig-$PIG_VERSION.tar.gz
+RUN curl -fSL "$PIG_URL" -o /tmp/pig.tar.gz \
+    && tar -xvf /tmp/pig.tar.gz -C /opt/ \
+    && rm /tmp/pig.tar.gz
+
+# 데이터 디렉토리 생성 및 설정 폴더의 심볼릭 링크 생성
+RUN ln -s /opt/pig-$PIG_VERSION /opt/pig
+
 #
 # 실행 환경에 필요한 환경 변수 등록
 #
@@ -77,7 +87,8 @@ ENV HADOOP_PID_DIR $HADOOP_HOME/pids
 ENV PATH $HADOOP_PREFIX/bin/:$PATH
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk/
 ENV YARN_HOME $HADOOP_HOME
-
+ENV PIG_HOME /opt/pig
+ENV PATH $PIG_HOME/bin:$PATH
 
 # 각 데몬 홈 디렉토리 경로 생성
 RUN mkdir /opt/hadoop/dfs/temp \

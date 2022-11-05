@@ -21,6 +21,9 @@ then
 
   sleep 10
   $HADOOP_HOME/sbin/start-yarn.sh
+
+  sleep 5
+  $HADOOP_HOME/sbine/mr-jobhistory-daemon.sh start historyserver
 fi
 
 if [ "$node" == "secondarynamenode" ]
@@ -38,6 +41,9 @@ then
   sleep 10
   $HADOOP_HOME/sbin/yarn-daemon.sh start resourcemanager
   $HADOOP_HOME/sbin/yarn-daemon.sh start nodemanager
+
+  sleep 5
+  $HADOOP_HOME/sbine/mr-jobhistory-daemon.sh start historyserver
 fi
 
 if [ "$node" == "zkdatanode" ]
@@ -50,6 +56,9 @@ then
   sleep 10
   $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
   $HADOOP_HOME/sbin/yarn-daemon.sh start nodemanager
+
+  sleep 5
+  $HADOOP_HOME/sbine/mr-jobhistory-daemon.sh start historyserver
 fi
 
 if [ "$node" == "datanode" ]
@@ -57,6 +66,11 @@ then
   sleep 15
   $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
   $HADOOP_HOME/sbin/yarn-daemon.sh start nodemanager
+
+  sleep 5
+  $HADOOP_HOME/sbin/mr-jobhistory-daemon.sh start historyserver
 fi
+
+
 
 tail -f /dev/null 2>&1
